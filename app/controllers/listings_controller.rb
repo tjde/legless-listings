@@ -3,11 +3,16 @@ class ListingsController < ApplicationController
     
     def create
         #create new listing
+        new_params = 
+        @listing = Listing.create(listing_params)
+        byebug
+     
     end
 
     def update
         #updates the current listing
     end
+
 
     def index
         #shows all listings
@@ -39,4 +44,10 @@ class ListingsController < ApplicationController
         id = params[:id]
         @listing = Listing.find(id)
     end
+    # this is setting the listing for the parameters    
+    def listing_params
+        params.require(:listing).permit(:title, :description, :breed_id, :sex, :deposit, :date_of_birth, :diet)
+    end
+
+    # this method is to whitelist your paramters
 end
