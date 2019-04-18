@@ -58,7 +58,7 @@ class ListingsController < ApplicationController
     end
     # this is setting the listing for the parameters    
     def listing_params
-        params.require(:listing).permit(:title, :description, :breed_id, :sex, :price, :deposit, :date_of_birth, :diet)
+        params.require(:listing).permit(:title, :description, :breed_id, :sex, :price, :deposit, :date_of_birth, :diet, :picture)
     end
 
     # this method is to whitelist your paramters
