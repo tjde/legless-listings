@@ -1,11 +1,14 @@
 class ListingsController < ApplicationController
+    before_action :authenticate_user!, except: [:index, :show]
     before_action :set_listing, only: [:show, :edit, :update, :destroy]
+    before_action :authorize_user, only: [:edit, :update, :destroy]
     before_action :set_breeds_and_sexes, only: [:new, :edit]
 
     def create
         #create new listing
         new_params = 
-        @listing = Listing.create(listing_params)
+        @listing = current_user.listings.create(listing_params)
+        # @listing = Listing.create(listing_params)
        
 
         if @listing.errors.any?
@@ -56,10 +59,17 @@ class ListingsController < ApplicationController
         id = params[:id]
         @listing = Listing.find(id)
     end
-    # this is setting the listing for the parameters    
+    # this is setting the listing for the parameters 
+    
+    def authorize_user
+        if @listing.user_id != current_user.id 
+            redirect_to listings_path
+        end
+    end
+
     def listing_params
         params.require(:listing).permit(:title, :description, :breed_id, :sex, :price, :deposit, :date_of_birth, :diet, :picture)
     end
 
-    # this method is to whitelist your paramters
+    # this method is to whitelist your parameters
 end
