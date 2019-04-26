@@ -6,7 +6,6 @@ class ListingsController < ApplicationController
 
     def create
         #create new listing
-        new_params = 
         @listing = current_user.listings.create(listing_params)
         # @listing = Listing.create(listing_params)
        
